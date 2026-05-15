@@ -1,7 +1,7 @@
 # **Sameem**
 **Founder & CEO | Full-Stack Developer & Business Strategist**
 
-Malappuram, Kerala, India | +91 8593848438 | contact@izumie.me | [LinkedIn](https://www.linkedin.com/in/izumie/) | [Portfolio](https://portfolio.izumie.me)
+Malappuram, Kerala, India | +91 8593848438 | sameem@qxel.app | [LinkedIn](https://www.linkedin.com/in/izumie/) | [Portfolio](https://portfolio.izumie.me)
 
 ---
 
