@@ -1,0 +1,69 @@
+name: Fix Exam Results Directory
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  move-exam-files:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Move files from exam_resuls to exam_results
+        run: |
+          # Check if the misspelled directory exists
+          if [ -d "exam_resuls" ]; then
+            echo "Found exam_resuls directory, moving files..."
+            
+            # Create exam_results directory if it doesn't exist
+            mkdir -p exam_results
+            
+            # Move all files from exam_resuls to exam_results
+            mv exam_resuls/* exam_results/ 2>/dev/null || echo "No files to move"
+            
+            # Also move hidden files
+            mv exam_resuls/.[!.]* exam_results/ 2>/dev/null || echo "No hidden files to move"
+            
+            # Remove the empty exam_resuls directory
+            rmdir exam_resuls 2>/dev/null || echo "Directory not empty, check manually"
+            
+            echo "Files moved successfully from exam_resuls to exam_results"
+          else
+            echo "exam_resuls directory not found, nothing to move"
+          fi
+          
+      - name: List moved files (for verification)
+        run: |
+          echo "## Files in exam_results directory:" > file-list.md
+          echo "" >> file-list.md
+          ls -la exam_results/ >> file-list.md 2>/dev/null || echo "Directory does not exist" >> file-list.md
+          
+      - name: Upload file listing as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: moved-files-listing
+          path: file-list.md
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are changes to commit
+          if [ -d "exam_results" ] && [ -n "$(git status --porcelain)" ]; then
+            git add exam_results/
+            git add exam_resuls/ 2>/dev/null || true
+            git commit -m "Fix: Move files from exam_resuls to exam_results directory"
+            git push
+            echo "Changes committed and pushed successfully"
+          else
+            echo "No changes to commit"
+          fi
