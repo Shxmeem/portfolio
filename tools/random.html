@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Random 32-Char Alphanumeric Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f5f7fc 0%, #eef2f8 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      max-width: 750px;
+      width: 100%;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      padding: 2rem 1.8rem 2.2rem 1.8rem;
+      border: 1px solid rgba(255,255,240,0.6);
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 600;
+      margin: 0 0 0.2rem 0;
+      background: linear-gradient(135deg, #1A2A3F, #2C3E66);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-block;
+    }
+
+    .sub {
+      font-size: 0.9rem;
+      color: #4a5b6e;
+      border-left: 3px solid #3b82f6;
+      padding-left: 0.85rem;
+      margin: 0.5rem 0 1.5rem 0;
+      font-weight: 450;
+    }
+
+    .result-area {
+      background: #0f1722;
+      border-radius: 1.8rem;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0 1.5rem 0;
+      border: 1px solid #2d3a4b;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.05);
+      transition: 0.1s linear;
+    }
+
+    #outputString {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 1.7rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      word-break: break-all;
+      white-space: normal;
+      color: #bbf0ff;
+      background: transparent;
+      text-shadow: 0 0 2px rgba(0,200,255,0.2);
+      line-height: 1.35;
+      display: block;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .string-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #1e2a3a;
+      color: #9ab3cf;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      font-family: monospace;
+      white-space: nowrap;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.8rem 0 1rem 0;
+    }
+
+    .btn {
+      border: none;
+      background: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      font-family: inherit;
+      backdrop-filter: blur(2px);
+    }
+
+    .btn-primary {
+      background: #1e3a5f;
+      color: white;
+      box-shadow: 0 8px 18px -8px rgba(0, 45, 80, 0.3);
+      border: 1px solid #2c5282;
+    }
+
+    .btn-primary:hover {
+      background: #0f2b44;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 22px -10px rgba(0, 35, 70, 0.4);
+    }
+
+    .btn-secondary {
+      background: #eef2ff;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .toast-msg {
+      visibility: hidden;
+      min-width: 180px;
+      background-color: #1f2a3e;
+      color: #e2f0ff;
+      text-align: center;
+      border-radius: 60px;
+      padding: 8px 18px;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      background: rgba(20, 30, 45, 0.9);
+      border: 1px solid #4b6e8a;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      z-index: 999;
+      border-radius: 40px;
+      transition: visibility 0s, opacity 0.2s linear;
+      opacity: 0;
+      pointer-events: none;
+      font-family: monospace;
+    }
+
+    .toast-msg.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .info-footer {
+      margin-top: 1.8rem;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #5c6f87;
+      border-top: 1px solid #dce5f0;
+      padding-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .length-check {
+      font-size: 0.8rem;
+      background: #eef3fc;
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 550px) {
+      .card {
+        padding: 1.5rem;
+      }
+      #outputString {
+        font-size: 1.2rem;
+      }
+      .btn {
+        padding: 0.6rem 1.2rem;
+      }
+      .string-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .badge {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap;">
+    <h1>✨ AlphaNigma</h1>
+    <div class="length-check">
+      <span>🔐 length: </span><strong>32 chars</strong>
+      <span style="font-size:1rem">| A-Z a-z 0-9</span>
+    </div>
+  </div>
+  <div class="sub">cryptographically random · 32 alphanumeric characters</div>
+
+  <div class="result-area">
+    <div class="string-wrapper">
+      <span class="badge">⭐ RANDOM SEED</span>
+      <div style="flex:1; min-width: 0;">
+        <span id="outputString" title="Click to copy to clipboard">––––––––––––––––––––––––––</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-primary" id="generateBtn">
+      🔄 GENERATE NEW
+    </button>
+    <button class="btn btn-secondary" id="copyBtn">
+      📋 COPY TO CLIPBOARD
+    </button>
+  </div>
+  
+  <div class="info-footer">
+    <span>⚡ 32 chars: digits (0-9) + uppercase + lowercase</span>
+    <span>🎲 secure random (Web Crypto API fallback)</span>
+  </div>
+</div>
+
+<div id="toastMessage" class="toast-msg">✨ Copied to clipboard!</div>
+
+<script>
+  (function() {
+    // ---------- ALPHANUMERIC SET: 62 characters (A-Z, a-z, 0-9) ----------
+    const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+    const DIGITS = '0123456789';
+    const ALPHANUM = (UPPER + LOWER + DIGITS);  // 62 unique chars
+    const TARGET_LEN = 32;
+    
+    // DOM elements
+    const outputSpan = document.getElementById('outputString');
+    const generateBtn = document.getElementById('generateBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const toastEl = document.getElementById('toastMessage');
+    
+    // ---------- Helper: high-quality random index (0 to max-1) ----------
+    // use Crypto.getRandomValues when available (modern secure), 
+    // fallback to Math.random (but still fairly uniform for a demo, but we prioritize Web Crypto)
+    // Implementation guarantees uniform distribution for array length up to 2^32 - something
+    function getSecureRandomIndex(max) {
+      if (max <= 0) return 0;
+      // Use window.crypto for strong randomness
+      if (window.crypto && window.crypto.getRandomValues) {
+        // Determine how many random bytes we need: up to 6 bytes for covering 62 safely, 
+        // but we generate a 32-bit unsigned integer and reduce modulo max.
+        // To avoid modulo bias, we use rejection sampling: generate a random value in [0, range) 
+        // where range is the largest multiple of max less than 2^32.
+        const MAX_UINT32 = 0xFFFFFFFF;
+        const randomBuffer = new Uint32Array(1);
+        // Find the largest multiple of max that fits into 0..MAX_UINT32
+        const maxValidMultiple = MAX_UINT32 - (MAX_UINT32 % max);
+        let randVal;
+        do {
+          window.crypto.getRandomValues(randomBuffer);
+          randVal = randomBuffer[0];
+        } while (randVal >= maxValidMultiple);
+        return randVal % max;
+      } 
+      // Fallback: Math.random (non-cryptographic but acceptable for general use, still random enough)
+      // For perfect unbiased fallback we could still produce decent distribution.
+      return Math.floor(Math.random() * max);
+    }
+    
+    // Main generator: returns a fresh 32-character alphanumeric string
+    function generateRandomAlphanumericString() {
+      const len = TARGET_LEN;
+      const chars = ALPHANUM;
+      const charCount = chars.length;  // = 62
+      let result = '';
+      
+      // Use two strategies for speed and security: 
+      // If crypto available, we can build using TypedArray for batch generation (even faster)
+      if (window.crypto && window.crypto.getRandomValues) {
+        // batch generation using Uint8Array (each random byte 0-255)
+        // We'll generate an array of random bytes and map each to a char using rejection region to keep uniform distribution.
+        // However getSecureRandomIndex already uses rejection method but for performance we can directly fetch many indices.
+        // But simpler: for 32 length, just loop using getSecureRandomIndex (calls crypto each iteration, but 32 iterations is trivial)
+        // However to improve performance and keep clean: use same function.
+        for (let i = 0; i < len; i++) {
+          const idx = getSecureRandomIndex(charCount);
+          result += chars[idx];
+        }
+      } else {
+        // legacy fallback: Math.random
+        for (let i = 0; i < len; i++) {
+          const idx = Math.floor(Math.random() * charCount);
+          result += chars[idx];
+        }
+      }
+      return result;
+    }
+    
+    // Even stronger version (optional) for demonstration: but our current getSecureRandomIndex 
+    // already cryptographically covers each character independently. Good.
+    
+    // Helper: Update DOM with new random string
+    let currentRandomString = '';
+    
+    function refreshAndDisplay() {
+      const newStr = generateRandomAlphanumericString();
+      currentRandomString = newStr;
+      outputSpan.textContent = newStr;
+      // subtle animation: add quick highlight effect
+      outputSpan.style.transition = 'all 0.08s ease';
+      outputSpan.style.textShadow = '0 0 6px #7ad0ff';
+      setTimeout(() => {
+        outputSpan.style.textShadow = '';
+      }, 150);
+    }
+    
+    // Copy to clipboard with modern API + fallback
+    async function copyToClipboard() {
+      if (!currentRandomString || currentRandomString.length !== TARGET_LEN) {
+        // fallback: if current string is invalid / placeholder, generate a new one then copy
+        if (outputSpan.textContent === '––––––––––––––––––––––––––' || outputSpan.textContent.length !== TARGET_LEN) {
+          refreshAndDisplay();
+        }
+        const textToCopy = currentRandomString || outputSpan.textContent;
+        if (textToCopy && textToCopy.length === TARGET_LEN) {
+          currentRandomString = textToCopy;
+        } else {
+          // extreme fallback
+          const fresh = generateRandomAlphanumericString();
+          currentRandomString = fresh;
+          outputSpan.textContent = fresh;
+        }
+      }
+      
+      const copyText = currentRandomString;
+      try {
+        await navigator.clipboard.writeText(copyText);
+        showToast('✅ Copied! 32 chars');
+      } catch (err) {
+        // fallback method for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = copyText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('📋 Copied (legacy)');
+      }
+    }
+    
+    let toastTimeout;
+    function showToast(message) {
+      toastEl.textContent = message || '📋 Copied to clipboard!';
+      toastEl.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 1800);
+    }
+    
+    // Interactive: click on the output string also copies
+    function setupEventListeners() {
+      generateBtn.addEventListener('click', () => {
+        refreshAndDisplay();
+        // optional: subtle haptic feedback simulation
+        generateBtn.style.transform = 'scale(0.98)';
+        setTimeout(() => { if(generateBtn) generateBtn.style.transform = ''; }, 100);
+      });
+      
+      copyBtn.addEventListener('click', () => {
+        copyToClipboard();
+      });
+      
+      // make output area clickable for copy
+      outputSpan.addEventListener('click', (e) => {
+        e.stopPropagation();
+        copyToClipboard();
+        // visual feedback
+        outputSpan.style.backgroundColor = 'rgba(80, 160, 255, 0.15)';
+        setTimeout(() => {
+          outputSpan.style.backgroundColor = '';
+        }, 150);
+      });
+      
+      // keyboard press G to generate new string? just nice extra
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'g' || e.key === 'G') {
+          if (!e.ctrlKey && !e.metaKey && document.activeElement?.tagName !== 'INPUT') {
+            e.preventDefault();
+            refreshAndDisplay();
+            showToast('🔄 Refreshed');
+          }
+        } else if (e.key === 'c' && (e.ctrlKey || e.metaKey)) {
+          // let normal copy work but we also can show our own copy via overriding? better not conflict
+          // but we will not prevent default in textarea; but if user focuses output we let browser copy?
+          // But for uniform experience we keep default clipboard action, we already have output click.
+          // However, we also will handle Ctrl+C for the active element without conflict.
+          if (document.activeElement === outputSpan || window.getSelection()?.toString()) {
+            // fine, but we can also copy the whole string without selection.
+            // but we just provide standard copy anyway, but we can override softly? not needed
+          }
+        }
+      });
+    }
+    
+    // additional entropy verification function: double-check length (ensuring exactly 32)
+    function validateString(str) {
+      if (str.length !== TARGET_LEN) return false;
+      for (let i = 0; i < str.length; i++) {
+        const code = str.charCodeAt(i);
+        const isDigit = (code >= 48 && code <= 57);
+        const isUpper = (code >= 65 && code <= 90);
+        const isLower = (code >= 97 && code <= 122);
+        if (!(isDigit || isUpper || isLower)) return false;
+      }
+      return true;
+    }
+    
+    // initial generation on page load
+    function init() {
+      const initialString = generateRandomAlphanumericString();
+      currentRandomString = initialString;
+      outputSpan.textContent = initialString;
+      // extra sanity:
+      if (!validateString(currentRandomString)) {
+        console.warn("Sanity check: generated string invalid? forcing regeneration");
+        const fixed = generateRandomAlphanumericString();
+        currentRandomString = fixed;
+        outputSpan.textContent = fixed;
+      }
+      setupEventListeners();
+    }
+    
+    // Edge: ensure that copy button copies the exact current 32-char string, even if 
+    // user double clicks generated. Works.
+    // Add additional method to force no accidental selection breaks.
+    init();
+  })();
+</script>
+</body>
+</html>
