@@ -281,7 +281,7 @@
                 <h2>🔑 Private Key (KEEP SECURE!)</h2>
                 <div class="key-box">
                     <div class="key-header">
-                        <div class="key-title">RSA Private Key</div>
+                        <div class="key-title">Private Key</div>
                         <div class="key-actions">
                             <button onclick="copyToClipboard('privateKey')">📋 Copy</button>
                             <button onclick="downloadKey('privateKey', 'private_key.pem')">💾 Download</button>
@@ -295,7 +295,7 @@
                 <h2>🌐 Public Key (Share this)</h2>
                 <div class="key-box">
                     <div class="key-header">
-                        <div class="key-title">RSA Public Key</div>
+                        <div class="key-title">Public Key</div>
                         <div class="key-actions">
                             <button onclick="copyToClipboard('publicKey')">📋 Copy</button>
                             <button onclick="downloadKey('publicKey', 'public_key.pem')">💾 Download</button>
@@ -368,8 +368,8 @@
                     // Convert to PKCS#1 format (traditional RSA)
                     const privateKeyDer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
                     const publicKeyDer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
-                    privateKeyPem = convertToPKCS1(privateKeyDer, "RSA PRIVATE KEY");
-                    publicKeyPem = convertToPKCS1(publicKeyDer, "RSA PUBLIC KEY");
+                    privateKeyPem = convertToPKCS1(privateKeyDer, "PRIVATE KEY");
+                    publicKeyPem = convertToPKCS1(publicKeyDer, "PUBLIC KEY");
                 }
                 
                 // Display keys
@@ -383,9 +383,6 @@
                 // Success message
                 document.getElementById('status').className = 'status success';
                 document.getElementById('status').innerHTML = `✅ RSA ${keySize}-bit key pair generated successfully! Keys are secure and only exist in your browser.`;
-                
-                // Save to localStorage for persistence
-                saveKeysToLocalStorage(privateKeyPem, publicKeyPem, keySize, format);
                 
             } catch (error) {
                 console.error('Generation error:', error);
@@ -404,11 +401,9 @@
             return pem;
         }
         
-        // Convert PKCS#8 to PKCS#1 (simplified - for demo purposes)
+        // Convert PKCS#8 to PKCS#1 style (using generic labels without RSA prefix)
         function convertToPKCS1(buffer, label) {
-            // This is a simplified conversion
-            // In production, you'd need proper ASN.1 parsing
-            // For now, just return as PKCS#8 format
+            // Uses generic PRIVATE KEY / PUBLIC KEY labels only (no RSA-specific)
             return arrayBufferToPEM(buffer, label);
         }
         
@@ -437,7 +432,7 @@
                     <tr>
                         <td style="padding: 10px;"><strong>Generation:</strong></td>
                         <td style="padding: 10px;">Client-side using Web Crypto API (cryptographically secure)</td>
-                    </tr>
+                     </tr>
                 </table>
             `;
         }
@@ -465,43 +460,17 @@
             showTempMessage('✅ Key downloaded!', 'success');
         }
         
-        // Delete all keys
+        // Delete all keys (only clears display, no localStorage persistence)
         function deleteAllKeys() {
-            if (confirm('⚠️ WARNING: This will delete ALL generated keys from this browser. Are you sure?')) {
-                localStorage.removeItem('rsa_private_key');
-                localStorage.removeItem('rsa_public_key');
-                localStorage.removeItem('rsa_key_info');
+            if (confirm('⚠️ WARNING: This will clear all generated keys from the display. Are you sure?')) {
                 document.getElementById('keyDisplay').style.display = 'none';
                 document.getElementById('status').className = 'status success';
-                document.getElementById('status').innerHTML = '🗑️ All keys have been deleted from local storage.';
+                document.getElementById('status').innerHTML = '🗑️ All keys have been cleared from display.';
                 setTimeout(() => {
-                    document.getElementById('status').className = 'status';
+                    if (document.getElementById('status').className === 'status success') {
+                        document.getElementById('status').className = 'status';
+                    }
                 }, 3000);
-            }
-        }
-        
-        // Save to localStorage
-        function saveKeysToLocalStorage(privateKey, publicKey, keySize, format) {
-            localStorage.setItem('rsa_private_key', privateKey);
-            localStorage.setItem('rsa_public_key', publicKey);
-            localStorage.setItem('rsa_key_info', JSON.stringify({ keySize, format, timestamp: new Date().toISOString() }));
-        }
-        
-        // Load from localStorage on page load
-        function loadSavedKeys() {
-            const privateKey = localStorage.getItem('rsa_private_key');
-            const publicKey = localStorage.getItem('rsa_public_key');
-            const keyInfo = localStorage.getItem('rsa_key_info');
-            
-            if (privateKey && publicKey && keyInfo) {
-                if (confirm('Previous keys found. Do you want to load them?')) {
-                    document.getElementById('privateKey').textContent = privateKey;
-                    document.getElementById('publicKey').textContent = publicKey;
-                    document.getElementById('keyDisplay').style.display = 'block';
-                    const info = JSON.parse(keyInfo);
-                    displayKeyInfo(info.keySize, info.format);
-                    showTempMessage('📂 Previous keys loaded from storage', 'info');
-                }
             }
         }
         
@@ -523,11 +492,6 @@
                 }
             }, 2000);
         }
-        
-        // Load saved keys on page load
-        window.addEventListener('load', () => {
-            loadSavedKeys();
-        });
     </script>
 </body>
 </html>
