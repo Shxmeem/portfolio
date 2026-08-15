@@ -1,0 +1,341 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F0F1A"/>
+      <stop offset="50%" stop-color="#151528"/>
+      <stop offset="100%" stop-color="#0A0A12"/>
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5252"/>
+      <stop offset="50%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#FFD600"/>
+    </linearGradient>
+
+    <linearGradient id="secondary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7928CA"/>
+      <stop offset="100%" stop-color="#FF0080"/>
+    </linearGradient>
+
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00DFD8"/>
+      <stop offset="100%" stop-color="#007CF0"/>
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Canvas Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .stroke-doodle { stroke-dasharray: 400; stroke-dashoffset: 400; animation: strokeDraw 3s ease-out forwards; }
+    .floating-slow { animation: float 6s ease-in-out infinite; }
+    .floating-fast { animation: float 3.5s ease-in-out infinite alternate; }
+    .pulse-glow { animation: pulse 4s ease-in-out infinite; }
+    .spin-slow { transform-origin: center; animation: spin 25s linear infinite; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(1.5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(1.05); }
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <!-- Base Background -->
+  <rect width="1200" height="675" fill="url(#bg-grad)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Glowing Background Blobs -->
+  <circle cx="250" cy="200" r="180" fill="#7928CA" class="pulse-glow" filter="url(#glow)"/>
+  <circle cx="950" cy="450" r="200" fill="#FF0080" class="pulse-glow" filter="url(#glow)" style="animation-delay: -2s;"/>
+  <circle cx="600" cy="280" r="150" fill="#007CF0" class="pulse-glow" filter="url(#glow)" style="animation-delay: -1s;"/>
+
+  <!-- ================= BACKGROUND DOODLES (Drawn Lines & Accents) ================= -->
+  <g stroke="#ffffff" stroke-opacity="0.15" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- Concentric Target Doodles -->
+    <circle cx="150" cy="500" r="80" stroke-dasharray="6 6"/>
+    <circle cx="150" cy="500" r="50"/>
+    <circle cx="150" cy="500" r="20"/>
+
+    <!-- Grid Crosses -->
+    <path d="M 900,100 L 920,100 M 910,90 L 910,110"/>
+    <path d="M 100,280 L 120,280 M 110,270 L 110,290"/>
+    <path d="M 680,600 L 700,600 M 690,590 L 690,610"/>
+
+    <!-- Squiggle Connection Lines -->
+    <path d="M 300,120 Q 380,70 450,130 T 600,100" stroke-width="3" stroke-dasharray="8 8"/>
+    <path d="M 750,550 Q 850,620 950,530" stroke-width="3" stroke-dasharray="6 6"/>
+  </g>
+
+  <!-- Rotating Starburst Doodle -->
+  <g transform="translate(1080, 160)" class="spin-slow" stroke="#FFD600" stroke-opacity="0.3" stroke-width="2">
+    <path d="M0,-30 L0,30 M-30,0 L30,0 M-20,-20 L20,20 M-20,20 L20,-20"/>
+  </g>
+  <g transform="translate(120, 100)" class="spin-slow" stroke="#00DFD8" stroke-opacity="0.3" stroke-width="2">
+    <path d="M0,-20 L0,20 M-20,0 L20,0 M-14,-14 L14,14 M-14,14 L14,-14"/>
+  </g>
+
+  <!-- ================= HERO CONTENT / CENTRAL HUB ================= -->
+
+  <!-- Outer Hero Orbit Rings -->
+  <g stroke-linecap="round" fill="none">
+    <ellipse cx="600" cy="350" rx="440" ry="210" stroke="url(#cyan-grad)" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="12 12" transform="rotate(-5, 600, 350)"/>
+    <ellipse cx="600" cy="350" rx="450" ry="200" stroke="url(#primary-grad)" stroke-width="2" stroke-opacity="0.3" transform="rotate(8, 600, 350)" stroke-dasharray="8 16"/>
+  </g>
+
+  <!-- Connection Rays (Platform outwards) -->
+  <g stroke-width="2" stroke-dasharray="4 8" stroke-opacity="0.4">
+    <line x1="480" y1="280" x2="280" y2="190" stroke="#FF7A00"/>
+    <line x1="720" y1="280" x2="900" y2="180" stroke="#00DFD8"/>
+    <line x1="600" y1="420" x2="600" y2="520" stroke="#FF0080"/>
+  </g>
+
+  <!-- Central Platform Card (Storefront Engine Hub) -->
+  <g class="floating-slow" transform="translate(0, 0)">
+    <!-- Card Shadow/Glow Base -->
+    <rect x="440" y="210" width="320" height="230" rx="24" fill="#18182E" stroke="url(#primary-grad)" stroke-width="3" filter="url(#soft-glow)"/>
+    <rect x="441" y="211" width="318" height="228" rx="23" fill="#121224" fill-opacity="0.9"/>
+    
+    <!-- Window Controls Doodle -->
+    <circle cx="475" cy="240" r="6" fill="#FF5252"/>
+    <circle cx="495" cy="240" r="6" fill="#FFD600"/>
+    <circle cx="515" cy="240" r="6" fill="#00DFD8"/>
+    <line x1="440" y1="260" x2="760" y2="260" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2"/>
+
+    <!-- Inner Storefront UI Mock Doodle -->
+    <!-- Profile Avatar & Handle -->
+    <circle cx="485" cy="295" r="18" fill="url(#secondary-grad)"/>
+    <path d="M 480 290 C 480 285, 490 285, 490 290 C 490 295, 480 298, 485 303" stroke="#fff" stroke-width="2" fill="none"/>
+    <rect x="515" y="285" width="90" height="8" rx="4" fill="#ffffff" fill-opacity="0.8"/>
+    <rect x="515" y="300" width="60" height="6" rx="3" fill="#ffffff" fill-opacity="0.3"/>
+
+    <!-- Revenue / Sales Mini Badge -->
+    <rect x="640" y="280" width="95" height="32" rx="8" fill="#00DFD8" fill-opacity="0.15" stroke="#00DFD8" stroke-width="1.5"/>
+    <path d="M 655 300 L 670 290 L 680 295 L 695 288 L 715 288" fill="none" stroke="#00DFD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="715" cy="288" r="3" fill="#00DFD8"/>
+
+    <!-- Product Grid Mockup inside Hub -->
+    <rect x="470" y="330" width="80" height="80" rx="12" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <circle cx="510" cy="360" r="16" fill="url(#primary-grad)" fill-opacity="0.8"/>
+    <rect x="480" y="390" width="60" height="6" rx="3" fill="#ffffff" fill-opacity="0.6"/>
+
+    <rect x="560" y="330" width="80" height="80" rx="12" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <polygon points="600,345 615,370 585,370" fill="#00DFD8" fill-opacity="0.8"/>
+    <rect x="570" y="390" width="60" height="6" rx="3" fill="#ffffff" fill-opacity="0.6"/>
+
+    <rect x="650" y="330" width="80" height="80" rx="12" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <rect x="675" y="350" width="30" height="25" rx="4" fill="#FF0080" fill-opacity="0.8"/>
+    <rect x="660" y="390" width="60" height="6" rx="3" fill="#ffffff" fill-opacity="0.6"/>
+  </g>
+
+  <!-- ================= PILLARS ANIMATION LOGIC ================= -->
+  <!-- Total animation cycle: 9 seconds (3 seconds per item). Loop infinitely. -->
+
+  <!-- ================= PILLAR 1: DIGITAL PRODUCTS (TOP LEFT) ================= -->
+  <g class="floating-fast" transform="translate(-10, -10)" opacity="0">
+    <!-- Sequence Animation: Visible 0-3s, Invisible 3-9s -->
+    <animate attributeName="opacity" values="0;1;1;0;0" dur="9s" keyTimes="0;0.05;0.33;0.38;1" repeatCount="indefinite" />
+    
+    <!-- Floating Node Card -->
+    <g transform="translate(140, 90)">
+      <rect width="260" height="170" rx="20" fill="#16162A" fill-opacity="0.95" stroke="#FF7A00" stroke-width="2.5" filter="url(#soft-glow)"/>
+      
+      <!-- Card Header Doodle -->
+      <text x="25" y="40" font-family="'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif" font-weight="bold" font-size="18" fill="#FF7A00">Digital Products</text>
+      <path d="M 25 50 L 235 50" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2"/>
+
+      <!-- 3D E-Book / Preset Box Doodle -->
+      <g transform="translate(35, 65)">
+        <!-- E-Book Spine & Cover -->
+        <path d="M 0 10 L 35 0 L 70 10 L 70 75 L 35 85 L 0 75 Z" fill="#FF5252" fill-opacity="0.2" stroke="#FF5252" stroke-width="2"/>
+        <path d="M 35 0 L 35 85" stroke="#FF5252" stroke-width="2"/>
+        <path d="M 10 25 L 28 20 M 10 38 L 28 33" stroke="#FFD600" stroke-width="2" stroke-linecap="round"/>
+        <!-- Download Arrow Doodle -->
+        <circle cx="35" cy="45" r="14" fill="#FF7A00"/>
+        <path d="M 35 38 L 35 50 M 30 46 L 35 51 L 40 46" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- Audio / Course File Doodles -->
+      <g transform="translate(130, 65)">
+        <!-- Audio Waveform Box -->
+        <rect x="0" y="0" width="95" height="40" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="#FFD600" stroke-width="1.5"/>
+        <path d="M 15 20 L 20 10 L 25 30 L 30 15 L 35 25 L 40 18 L 45 22 L 50 10 L 55 30 L 60 20 L 65 25 L 70 15 M 78 12 L 78 28" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        
+        <!-- Price Tag Badge -->
+        <rect x="0" y="48" width="65" height="24" rx="12" fill="#FF5252"/>
+        <text x="32" y="65" font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle">$49</text>
+      </g>
+
+      <!-- Sparkles around Products -->
+      <path d="M 230 20 L 235 30 L 245 35 L 235 40 L 230 50 L 225 40 L 215 35 L 225 30 Z" fill="#FFD600"/>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 2: CREATOR BLOGS & CMS (TOP RIGHT) ================= -->
+  <g class="floating-slow" style="animation-delay: -1.5s;" opacity="0">
+    <!-- Sequence Animation: Invisible 0-3s, Visible 3-6s, Invisible 6-9s -->
+    <animate attributeName="opacity" values="0;0;1;1;0;0" dur="9s" keyTimes="0;0.33;0.38;0.66;0.71;1" repeatCount="indefinite" />
+
+    <g transform="translate(800, 80)">
+      <rect width="270" height="180" rx="20" fill="#16162A" fill-opacity="0.95" stroke="#00DFD8" stroke-width="2.5" filter="url(#soft-glow)"/>
+
+      <!-- Card Header -->
+      <text x="25" y="40" font-family="'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif" font-weight="bold" font-size="18" fill="#00DFD8">Creator Blogs</text>
+      <path d="M 25 50 L 245 50" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2"/>
+
+      <!-- Blog Article Doodle Mockup -->
+      <!-- Pen/Fountain Nib -->
+      <g transform="translate(200, 65)" class="floating-fast">
+        <path d="M 0 40 L 15 0 L 30 40 L 15 35 Z" fill="url(#cyan-grad)"/>
+        <path d="M 15 0 L 15 20" stroke="#16162A" stroke-width="2"/>
+        <circle cx="15" cy="20" r="3" fill="#16162A"/>
+      </g>
+
+      <!-- Article Lines & Content -->
+      <rect x="25" y="65" width="150" height="12" rx="4" fill="#ffffff" fill-opacity="0.9"/>
+      
+      <!-- Text Line Skeleton Doodles -->
+      <path d="M 25 92 L 170 92 M 25 104 L 210 104 M 25 116 L 190 116 M 25 128 L 140 128" stroke="#ffffff" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round" stroke-dasharray="100 0"/>
+
+      <!-- Paywall / Membership Lock Badge -->
+      <g transform="translate(25, 138)">
+        <rect x="0" y="0" width="110" height="26" rx="6" fill="#7928CA" fill-opacity="0.4" stroke="#7928CA" stroke-width="1.5"/>
+        <!-- Lock Icon -->
+        <rect x="12" y="11" width="12" height="10" rx="2" fill="#00DFD8"/>
+        <path d="M 14 11 V 7 A 4 4 0 0 1 22 7 V 11" fill="none" stroke="#00DFD8" stroke-width="2"/>
+        <text x="62" y="17" font-family="sans-serif" font-weight="bold" font-size="10" fill="#00DFD8" text-anchor="middle">MEMBERS ONLY</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 3: MARKETPLACE DISCOVERY (BOTTOM CENTER) ================= -->
+  <g class="floating-fast" style="animation-delay: -2.5s;" opacity="0">
+    <!-- Sequence Animation: Invisible 0-6s, Visible 6-9s -->
+    <animate attributeName="opacity" values="0;0;1;1;0" dur="9s" keyTimes="0;0.66;0.71;0.95;1" repeatCount="indefinite" />
+
+    <g transform="translate(430, 460)">
+      <rect width="340" height="170" rx="20" fill="#16162A" fill-opacity="0.95" stroke="#FF0080" stroke-width="2.5" filter="url(#soft-glow)"/>
+
+      <!-- Header -->
+      <text x="25" y="38" font-family="'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif" font-weight="bold" font-size="18" fill="#FF0080">Marketplace Discovery</text>
+      <path d="M 25 48 L 315 48" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2"/>
+
+      <!-- Search & Radar Loop Doodle -->
+      <g transform="translate(25, 60)">
+        <!-- Search Bar -->
+        <rect x="0" y="0" width="200" height="36" rx="18" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5"/>
+        <text x="40" y="22" font-family="sans-serif" font-size="12" fill="#ffffff" fill-opacity="0.5">Search creators, 3D assets...</text>
+        <!-- Magnifying Glass Doodle -->
+        <circle cx="22" cy="17" r="7" stroke="#FF0080" stroke-width="2.5" fill="none"/>
+        <line x1="27" y1="22" x2="33" y2="28" stroke="#FF0080" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- Tags / Categories Doodles -->
+        <rect x="0" y="46" width="55" height="20" rx="10" fill="#FFD600" fill-opacity="0.2" stroke="#FFD600" stroke-width="1"/>
+        <text x="27" y="60" font-family="sans-serif" font-size="10" fill="#FFD600" text-anchor="middle">#Audio</text>
+
+        <rect x="62" y="46" width="65" height="20" rx="10" fill="#00DFD8" fill-opacity="0.2" stroke="#00DFD8" stroke-width="1"/>
+        <text x="94" y="60" font-family="sans-serif" font-size="10" fill="#00DFD8" text-anchor="middle">#Design</text>
+
+        <rect x="134" y="46" width="60" height="20" rx="10" fill="#FF7A00" fill-opacity="0.2" stroke="#FF7A00" stroke-width="1"/>
+        <text x="164" y="60" font-family="sans-serif" font-size="10" fill="#FF7A00" text-anchor="middle">#Ebooks</text>
+      </g>
+
+      <!-- Compass / Discovery Globe Doodle -->
+      <g transform="translate(265, 105)">
+        <circle cx="0" cy="0" r="32" fill="url(#secondary-grad)" fill-opacity="0.2" stroke="#FF0080" stroke-width="2"/>
+        <!-- Compass Needle / Rocket -->
+        <path d="M -8,8 L 12,-12 L 4,16 Z" fill="#FF0080"/>
+        <path d="M -12,12 L 8,-8 L -4,-16 Z" fill="#ffffff"/>
+        <circle cx="0" cy="0" r="4" fill="#16162A"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= EXTRA DOODLE ELEMENTS & CHARACTERS ================= -->
+
+  <!-- Top Center: Success / Sales Rocket Doodle -->
+  <g transform="translate(570, 40)" class="floating-fast">
+    <path d="M 30 0 C 50 20, 45 60, 45 60 C 45 60, 5 50, 0 30 C 0 30, 15 15, 30 0 Z" fill="url(#primary-grad)"/>
+    <!-- Rocket Window -->
+    <circle cx="28" cy="28" r="7" fill="#151528" stroke="#ffffff" stroke-width="2"/>
+    <!-- Flame Doodles -->
+    <path d="M 5 42 Q -10 55 2 68 Q 15 58 20 48 Z" fill="#FFD600"/>
+    <path d="M 22 47 Q 30 65 42 58 Q 38 48 30 44 Z" fill="#FF5252"/>
+  </g>
+
+  <!-- Left Side: Creator Palette & Art Doodles -->
+  <g transform="translate(60, 380)" class="floating-slow" style="animation-delay: -1s;">
+    <!-- Palette -->
+    <path d="M 50 0 C 80 0, 100 20, 90 50 C 80 80, 30 90, 10 60 C -10 30, 20 0, 50 0 Z" fill="#1E1E38" stroke="#FFD600" stroke-width="2"/>
+    <circle cx="30" cy="25" r="6" fill="#FF5252"/>
+    <circle cx="55" cy="20" r="6" fill="#00DFD8"/>
+    <circle cx="73" cy="38" r="6" fill="#FF0080"/>
+    <circle cx="30" cy="55" r="8" fill="#151528"/> <!-- Thumbhole -->
+    <!-- Pencil Doodle -->
+    <path d="M 75 50 L 110 85 L 100 95 L 65 60 Z" fill="#FF7A00"/>
+    <polygon points="110,85 120,95 100,95" fill="#FFD600"/>
+  </g>
+
+  <!-- Right Side: Money / Revenue Hand-drawn Doodles -->
+  <g transform="translate(1000, 360)" class="floating-fast" style="animation-delay: -3s;">
+    <!-- Floating Coin 1 -->
+    <ellipse cx="40" cy="20" rx="25" ry="25" fill="#FFD600" stroke="#FF7A00" stroke-width="3"/>
+    <text x="40" y="28" font-family="sans-serif" font-weight="900" font-size="22" fill="#151528" text-anchor="middle">$</text>
+    
+    <!-- Floating Coin 2 -->
+    <g transform="translate(50, 70) rotate(15)">
+      <ellipse cx="20" cy="20" rx="18" ry="18" fill="#FFD600" stroke="#FF7A00" stroke-width="2"/>
+      <text x="20" y="26" font-family="sans-serif" font-weight="900" font-size="16" fill="#151528" text-anchor="middle">$</text>
+    </g>
+
+    <!-- Success Arrow Doodle -->
+    <path d="M -20 100 Q 10 80 30 40" fill="none" stroke="#00DFD8" stroke-width="4" stroke-linecap="round" stroke-dasharray="6 6"/>
+    <path d="M 18 38 L 32 36 L 30 52" fill="none" stroke="#00DFD8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Floating Sparkles, Like Buttons & Stars across Canvas -->
+  <!-- Heart Like Doodle -->
+  <g transform="translate(380, 160)" class="floating-fast">
+    <path d="M 12 5 C 8 -2, 0 0, 0 8 C 0 15, 12 24, 12 24 C 12 24, 24 15, 24 8 C 24 0, 16 -2, 12 5 Z" fill="#FF0080" transform="scale(1.2)"/>
+  </g>
+  
+  <!-- Star Doodle Right -->
+  <g transform="translate(760, 150)" class="floating-slow">
+    <path d="M 0 -12 L 3 -3 L 12 0 L 3 3 L 0 12 L -3 3 L -12 0 L -3 -3 Z" fill="#FFD600" transform="scale(1.3)"/>
+  </g>
+
+  <!-- Zap / Lightning Bolt Doodle -->
+  <g transform="translate(390, 430)" class="floating-fast" style="animation-delay: -0.8s;">
+    <polygon points="10,0 0,16 8,16 2,30 18,12 10,12" fill="#FFD600" filter="url(#soft-glow)"/>
+  </g>
+
+  <!-- Crown Doodle over Central Hub -->
+  <g transform="translate(575, 175)" class="floating-fast">
+    <path d="M 0 15 L 10 0 L 25 10 L 40 0 L 50 15 L 45 22 L 5 22 Z" fill="#FFD600" stroke="#FF7A00" stroke-width="1.5"/>
+    <circle cx="10" cy="0" r="2.5" fill="#fff"/>
+    <circle cx="25" cy="10" r="2.5" fill="#fff"/>
+    <circle cx="40" cy="0" r="2.5" fill="#fff"/>
+  </g>
+
+</svg>
