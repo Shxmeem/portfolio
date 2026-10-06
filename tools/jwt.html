@@ -437,14 +437,40 @@
             `;
         }
         
-        // Copy to clipboard
+        // Copy to clipboard — FIXED: fallback to execCommand for iframe / non-secure contexts
         async function copyToClipboard(keyId) {
             const keyText = document.getElementById(keyId).textContent;
             try {
-                await navigator.clipboard.writeText(keyText);
+                // Try modern clipboard API first
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(keyText);
+                } else {
+                    throw new Error('Clipboard API not available');
+                }
                 showTempMessage('✅ Copied to clipboard!', 'success');
             } catch (err) {
-                showTempMessage('❌ Failed to copy', 'error');
+                // Fallback: legacy execCommand method (works in most iframes)
+                try {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = keyText;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    textarea.style.left = '-9999px';
+                    textarea.style.top = '0';
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    if (successful) {
+                        showTempMessage('✅ Copied to clipboard!', 'success');
+                    } else {
+                        throw new Error('execCommand copy failed');
+                    }
+                } catch (fallbackErr) {
+                    console.error('Copy failed:', fallbackErr);
+                    showTempMessage('❌ Failed to copy. Please select and copy manually.', 'error');
+                }
             }
         }
         
