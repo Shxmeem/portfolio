@@ -1,39 +1,96 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0F172A"/>
-      <stop offset="100%" stop-color="#1E40AF"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#22D3EE"/>
-      <stop offset="100%" stop-color="#3B82F6"/>
-    </linearGradient>
+    <filter id="neonRedGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
+  <g filter="url(#neonRedGlow)">
+    <path d="M 212 332 A 98 98 0 0 0 353 236"
+          fill="none"
+          stroke="#FF2238"
+          stroke-width="4.5"
+          stroke-linecap="round"/>
+    <g stroke="#FF2238" stroke-width="4" stroke-linecap="round">
+      <line x1="236" y1="345" x2="240" y2="333"/>
+      <line x1="292" y1="342" x2="287" y2="330"/>
+      <line x1="333" y1="308" x2="322" y2="300"/>
+      <line x1="351" y1="262" x2="339" y2="259"/>
+    </g>
 
-  <!-- Background -->
-  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#bg)"/>
+    <path d="M 193 163
+             C 193 155, 198 150, 206 150
+             L 216 150
+             L 216 338
+             C 216 346, 210 351, 203 351
+             C 196 351, 193 345, 193 337
+             Z"
+          fill="#FF2238"/>
 
-  <!-- Circuit lines -->
-  <g stroke="#22D3EE" stroke-width="3" opacity="0.35" fill="none" stroke-linecap="round">
-    <path d="M 70 150 H 110 V 200"/>
-    <path d="M 442 360 H 402 V 310"/>
-    <path d="M 70 360 H 110 V 320"/>
+    <path d="M 278 265 L 336 335 C 342 342, 337 350, 328 350 L 313 350 C 308 350, 304 348, 300 343 L 246 276"
+          fill="none"
+          stroke="transparent"
+          stroke-width="10"
+          stroke-linejoin="round"/>
+    <path fill-rule="evenodd"
+          fill="#FF2238"
+          d="
+            M 212 150
+            L 258 150
+            C 308 150, 329 182, 329 213
+            C 329 240, 310 261, 281 267
+            L 337 335
+            C 343 342, 338 350, 329 350
+            L 314 350
+            C 309 350, 305 348, 301 343
+            L 244 274
+            C 229 256, 232 229, 255 229
+            L 264 229
+            C 289 229, 299 217, 299 201
+            C 299 183, 287 174, 262 174
+            L 212 174
+            Z
+
+            M 214 157.5
+            L 258 157.5
+            C 302 157.5, 321 185, 321 213
+            C 321 237, 303 255, 270 260
+            L 329 338
+            C 331 340.5, 329.5 342.5, 326.5 342.5
+            L 316.5 342.5
+            C 314 342.5, 312 341.5, 310 339
+            L 251 268
+            C 240 255, 242 236.5, 256 236.5
+            L 264 236.5
+            C 295 236.5, 307 221, 307 201
+            C 307 178, 291 166.5, 262 166.5
+            L 214 166.5
+            Z
+          "/>
+
+    <path d="M 196 336 C 218 304, 248 294, 282 276 C 314 259, 340 226, 362 184"
+          fill="none"
+          stroke="transparent"
+          stroke-width="15"
+          stroke-linecap="round"/>
+
+    <path d="M 196 338 C 218 304, 248 294, 282 276 C 314 259, 340 226, 363 182"
+          fill="none"
+          stroke="#FF2238"
+          stroke-width="7.5"
+          stroke-linecap="round"/>
+    <path d="M 339 175
+             L 382 156
+             L 377 203
+             L 363 184
+             Z"
+          fill="#FF2238"
+          stroke="#FF2238"
+          stroke-width="4"
+          stroke-linejoin="round"/>
+
   </g>
-  <circle cx="70" cy="150" r="6" fill="#22D3EE"/>
-  <circle cx="442" cy="360" r="6" fill="#22D3EE"/>
-  <circle cx="70" cy="360" r="6" fill="#22D3EE"/>
-
-  <!-- R Letter -->
-  <text x="256" y="300" font-family="Inter, Arial, sans-serif" font-size="190" font-weight="800" fill="white" text-anchor="middle">R</text>
-
-  <!-- Code brackets + Download -->
-  <g stroke="url(#accent)" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M 165 350 L 125 390 L 165 430"/>
-    <path d="M 347 350 L 387 390 L 347 430"/>
-    <path d="M 256 350 L 256 430"/>
-    <path d="M 226 400 L 256 430 L 286 400"/>
-  </g>
-
-  <!-- AI Dot -->
-  <circle cx="368" cy="160" r="14" fill="#22D3EE"/>
 </svg>
