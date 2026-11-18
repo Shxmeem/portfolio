@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
-    <!-- Gradients matching the blue/cyan/purple metallic-tech aesthetic -->
     <linearGradient id="archGrad" x1="0%" y1="100%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#072254"/>
       <stop offset="40%" stop-color="#0D6EFD"/>
@@ -34,18 +33,15 @@
     </filter>
   </defs>
 
-  <!-- Optional subtle light background (remove rect for transparent background) -->
   <rect width="800" height="500" fill="#F9FAFC"/>
 
-  <!-- LOGO ICON GROUP -->
   <g transform="translate(275, 55) scale(1.1)">
-    
-    <!-- Glowing Node / Dot on the left -->
+    <!-- Glowing Node / Dot -->
     <circle cx="38" cy="112" r="22" fill="url(#dotGlow)"/>
     <circle cx="38" cy="112" r="9" fill="#0B5ED7"/>
     <circle cx="38" cy="112" r="5" fill="#8DF8FF" filter="url(#glow)"/>
 
-    <!-- Upper 'R' Arch / Curve -->
+    <!-- Upper 'R' Arch -->
     <path d="M 35 102 
              C 32 52, 72 28, 118 28 
              C 158 28, 182 54, 174 88 
@@ -71,15 +67,13 @@
              C 158 146, 148 130, 138 118 Z" 
           fill="url(#legGrad)"/>
 
-    <!-- Zig-Zag Upward Growth Arrow -->
+    <!-- Zig-Zag Growth Line (Shortened further to sit cleanly inside the R curve) -->
+    <!-- To adjust length manually: lower the L 160 104 / L 148 92 coordinates to pull it back further, or raise them to extend -->
     <path d="M 52 168 
              L 94 118 
              L 124 146 
-             L 196 64 
-             L 208 75 
-             L 216 28 
-             L 170 40 
-             L 182 51 
+             L 160 104 
+             L 148 92 
              L 122 119 
              L 92 91 
              L 36 156 
@@ -89,15 +83,13 @@
              L 94 118 Z" 
           fill="url(#arrowGrad)"/>
 
-    <!-- Clean Inner Edge & Highlight on Zig-Zag Arrow -->
+    <!-- Clean Inner Highlight on Zig-Zag Line -->
+    <!-- To adjust highlight tip manually: match L 154 99 / L 146 91 slightly inside the outer tip coordinates above -->
     <path d="M 45 170 
              L 93 113 
              L 123 141 
-             L 198 56 
-             L 205 63 
-             L 211 33 
-             L 181 41 
-             L 188 48 
+             L 154 99 
+             L 146 91 
              L 122 124 
              L 92 96 
              L 40 158 
@@ -105,4 +97,20 @@
           fill="none" stroke="#9DF9FF" stroke-width="1.8" stroke-linejoin="round" opacity="0.85"/>
   </g>
 
+  <text x="400" y="362" 
+        font-family="'Montserrat', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+        font-size="68" 
+        font-weight="800" 
+        letter-spacing="4" 
+        fill="#082454" 
+        text-anchor="middle">RAMETER</text>
+
+  <text x="400" y="398" 
+        font-family="'Montserrat', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+        font-size="18.5" 
+        font-weight="600" 
+        letter-spacing="2.2" 
+        fill="#0D2C63" 
+        text-anchor="middle">AI ANALYTICS &amp; OPTIMIZATION</text>
 </svg>
+
