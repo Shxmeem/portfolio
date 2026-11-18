@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
   <defs>
+    <!-- Subtle Glow Filter for the Logo Mark -->
     <filter id="neonRedGlow" x="-25%" y="-25%" width="150%" height="150%">
       <feGaussianBlur stdDeviation="5" result="blur"/>
       <feMerge>
@@ -8,19 +9,30 @@
       </feMerge>
     </filter>
   </defs>
+
+  <!-- LOGO GROUP -->
   <g filter="url(#neonRedGlow)">
+
+    <!-- 1. Precision Meter / Gauge Arc (Bottom-Right Quadrant) -->
     <path d="M 212 332 A 98 98 0 0 0 353 236"
           fill="none"
           stroke="#FF2238"
           stroke-width="4.5"
           stroke-linecap="round"/>
+
+    <!-- Meter Radial Tick Marks -->
     <g stroke="#FF2238" stroke-width="4" stroke-linecap="round">
+      <!-- Tick 1 (Bottom-Left) -->
       <line x1="236" y1="345" x2="240" y2="333"/>
+      <!-- Tick 2 (Bottom-Right) -->
       <line x1="292" y1="342" x2="287" y2="330"/>
+      <!-- Tick 3 (Lower-Right) -->
       <line x1="333" y1="308" x2="322" y2="300"/>
+      <!-- Tick 4 (Mid-Right) -->
       <line x1="351" y1="262" x2="339" y2="259"/>
     </g>
 
+    <!-- 2. Solid Left Vertical Pillar of 'R' -->
     <path d="M 193 163
              C 193 155, 198 150, 206 150
              L 216 150
@@ -30,11 +42,15 @@
              Z"
           fill="#FF2238"/>
 
+    <!-- 3. Continuous Hollow Double-Line 'R' Ribbon -->
+    <!-- Cutout mask behind 'R' leg where it crosses the meter arc (using transparent/none) -->
     <path d="M 278 265 L 336 335 C 342 342, 337 350, 328 350 L 313 350 C 308 350, 304 348, 300 343 L 246 276"
           fill="none"
           stroke="transparent"
           stroke-width="10"
           stroke-linejoin="round"/>
+
+    <!-- Hollow 'R' Ribbon using Even-Odd Fill Rule -->
     <path fill-rule="evenodd"
           fill="#FF2238"
           d="
@@ -71,26 +87,20 @@
             Z
           "/>
 
+    <!-- 4. Rising Growth / Metric Line (Arrowhead Removed, cleanly ended with rounded cap) -->
+    <!-- Transparent Separation Cutout so Line cleanly overlaps the 'R' on transparent background -->
     <path d="M 196 336 C 218 304, 248 294, 282 276 C 314 259, 340 226, 362 184"
           fill="none"
           stroke="transparent"
           stroke-width="15"
           stroke-linecap="round"/>
 
-    <path d="M 196 338 C 218 304, 248 294, 282 276 C 314 259, 340 226, 363 182"
+    <!-- Main Diagonal Shaft (Extended slightly to finish cleanly without arrowhead) -->
+    <path d="M 196 338 C 218 304, 248 294, 282 276 C 314 259, 345 222, 368 180"
           fill="none"
           stroke="#FF2238"
           stroke-width="7.5"
           stroke-linecap="round"/>
-    <path d="M 339 175
-             L 382 156
-             L 377 203
-             L 363 184
-             Z"
-          fill="#FF2238"
-          stroke="#FF2238"
-          stroke-width="4"
-          stroke-linejoin="round"/>
 
   </g>
 </svg>
